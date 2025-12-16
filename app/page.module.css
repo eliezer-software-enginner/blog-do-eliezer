@@ -1,0 +1,131 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+/* Hero Section */
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 4rem 0;
+  animation: zoomIn 0.7s ease-out;
+}
+
+.profileWrapper {
+  margin-bottom: 1.5rem;
+  padding: 4px;
+  background: linear-gradient(to bottom right, var(--primary), var(--secondary));
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+}
+
+.profileImage {
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid var(--background);
+  display: block;
+}
+
+.title {
+  font-family: var(--font-outfit);
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(to bottom, var(--foreground), #94a3b8);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+@media (min-width: 768px) {
+  .title {
+    font-size: 3.5rem;
+  }
+}
+
+.role {
+  font-family: var(--font-inter);
+  font-size: 1.25rem;
+  color: var(--primary);
+  font-weight: 600;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: rgba(139, 92, 246, 0.1);
+  padding: 0.25rem 1rem;
+  border-radius: 9999px;
+}
+
+.subtitle {
+  max-width: 36rem;
+  margin: 0 auto;
+  font-size: 1.125rem;
+  color: #94a3b8; /* muted-foreground */
+  animation: slideUp 0.7s ease-out 0.15s backwards;
+  line-height: 1.6;
+}
+
+/* Post Card Grid */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  animation: fadeIn 0.7s ease-out 0.3s backwards;
+}
+
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Base Keyframes */
+@keyframes zoomIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(1rem); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Empty State */
+.emptyState {
+  text-align: center;
+  padding: 5rem 0;
+  background-color: var(--card);
+  border-radius: 1.5rem;
+  border: 1px dashed var(--border);
+}
+
+.emptyText {
+  color: #94a3b8;
+  margin-bottom: 1rem;
+}
+
+.createButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.625rem 1.5rem;
+  border-radius: 9999px;
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+  font-weight: 500;
+  box-shadow: 0 10px 15px -3px rgba(139, 92, 246, 0.2);
+  transition: opacity 0.2s;
+}
+
+.createButton:hover {
+  opacity: 0.9;
+}

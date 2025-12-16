@@ -1,0 +1,155 @@
+.wrapper {
+  max-width: 42rem;
+  margin: 0 auto;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.875rem;
+  color: #94a3b8;
+  margin-bottom: 1.5rem;
+  transition: color 0.2s;
+}
+
+.backLink:hover {
+  color: var(--primary);
+}
+
+.arrow {
+  margin-right: 0.5rem;
+  transition: transform 0.2s;
+}
+
+.backLink:hover .arrow {
+  transform: translateX(-4px);
+}
+
+.card {
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 1.5rem;
+  padding: 2rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+}
+
+.title {
+  font-size: 1.875rem;
+  font-family: var(--font-outfit);
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(to right, var(--primary), var(--accent));
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--foreground);
+  margin-left: 0.25rem;
+}
+
+.labelRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 0.25rem;
+}
+
+.badge {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  background-color: var(--secondary);
+  padding: 0.125rem 0.5rem;
+  border-radius: 0.375rem;
+}
+
+.input, .textarea {
+  width: 100%;
+  background-color: var(--input);
+  border: 1px solid transparent;
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  color: var(--foreground);
+  font-size: 1rem;
+  transition: all 0.2s;
+}
+
+.textarea {
+  font-family: monospace;
+  font-size: 0.875rem;
+  resize: vertical;
+}
+
+.input:focus, .textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.5); /* ring */
+}
+
+.input::placeholder, .textarea::placeholder {
+  color: #64748b;
+}
+
+.button {
+  width: 100%;
+  padding: 0.875rem;
+  border-radius: 9999px;
+  background: linear-gradient(to right, var(--primary), var(--accent));
+  color: white;
+  font-weight: 700;
+  font-size: 1.125rem;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 10px 15px -3px rgba(139, 92, 246, 0.25);
+}
+
+.button:hover:not(:disabled) {
+  opacity: 0.9;
+  transform: scale(1.02);
+}
+
+.button:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.spinner {
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  display: inline-block;
+  margin-right: 0.5rem;
+  vertical-align: middle;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}

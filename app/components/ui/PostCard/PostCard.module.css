@@ -1,0 +1,99 @@
+/* Copied and adapted from app/page.module.css */
+
+.cardLink {
+  display: block;
+  position: relative;
+  height: 100%;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.card {
+  position: relative;
+  height: 100%;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: border-color 0.3s;
+}
+
+.card:hover {
+  border-color: rgba(139, 92, 246, 0.5); /* primary/50 */
+}
+
+.glow {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, rgba(139, 92, 246, 0.2), rgba(236, 72, 153, 0.2));
+  border-radius: 1rem;
+  filter: blur(24px);
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.cardLink:hover .glow {
+  opacity: 1;
+}
+
+.cardTitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  transition: color 0.3s;
+  color: var(--foreground);
+  font-family: var(--font-outfit);
+}
+
+.card:hover .cardTitle {
+  color: var(--primary);
+}
+
+.meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  font-size: 0.75rem;
+  color: #94a3b8;
+  font-family: monospace;
+}
+
+.author {
+  color: var(--foreground);
+  font-weight: 600;
+}
+
+.cardContent {
+  color: #94a3b8;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  flex: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-family: var(--font-inter);
+}
+
+.readMore {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  color: var(--primary);
+  font-size: 0.875rem;
+  font-weight: 500;
+  font-family: var(--font-inter);
+}
+
+.arrow {
+  margin-left: 0.5rem;
+  transition: transform 0.3s;
+}
+
+.card:hover .arrow {
+  transform: translateX(4px);
+}
