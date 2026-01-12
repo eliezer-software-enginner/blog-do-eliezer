@@ -2,6 +2,9 @@ import { collection, getDocs } from 'firebase/firestore';
 import { serverDb } from '@/lib/firebase-server';
 import { FIREBASE_COLLECTIONS } from '@/lib/collections';
 
+// Revalidar sitemap a cada 6 horas
+export const revalidate = 21600;
+
 export default async function sitemap() {
   const postsCollection = collection(serverDb, FIREBASE_COLLECTIONS.POSTS);
   const postSnapshot = await getDocs(postsCollection);

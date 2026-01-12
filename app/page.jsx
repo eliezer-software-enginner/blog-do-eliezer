@@ -1,41 +1,33 @@
-'use client';
-
+// /app/page.jsx - Server-side com ISR
 import { collection, getDocs, orderBy, query } from 'firebase/firestore';
 import { FIREBASE_COLLECTIONS } from '@/lib/collections';
-import { useEffect, useState } from 'react';
-
-import img from '@/app/assets/user_4.png';
-import { db } from '@/lib/firebase';
-import Image from 'next/image';
 import Link from 'next/link';
-import { PostCard } from './components/ui/PostCard/PostCard';
+import Image from 'next/image';
 import styles from './page.module.css';
+import { PostCard } from './components/ui/PostCard/PostCard';
+import { serverDb } from '@/lib/firebase-server';
 
-export default function HomePage() {
-  const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
+// Revalidação a cada 1 hora (3600 segundos)
+export const revalidate = 3600;
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const postsCollection = collection(db, FIREBASE_COLLECTIONS.POSTS);
-        const q = query(postsCollection, orderBy('createdAt', 'desc'));
-        const postSnapshot = await getDocs(q);
+async function getPosts() {
+  try {
+    const postsCollection = collection(serverDb, FIREBASE_COLLECTIONS.POSTS);
+    const q = query(postsCollection, orderBy('createdAt', 'desc'));
+    const postSnapshot = await getDocs(q);
 
-        const postsList = postSnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        setPosts(postsList);
-        setLoading(false);
-      } catch (error) {
-        console.error('Erro ao buscar posts: ', error);
-        setLoading(false);
-      }
-    };
+    return postSnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+  } catch (error) {
+    console.error('Erro ao buscar posts:', error);
+    return [];
+  }
+}
 
-    fetchPosts();
-  }, []);
+export default async function HomePage() {
+  const posts = await getPosts();
 
   return (
     <div className={styles.container}>
@@ -43,7 +35,7 @@ export default function HomePage() {
       <section className={styles.hero}>
         <div className={styles.profileWrapper}>
           <Image
-            src={img}
+            src="/user_4.png"
             alt='Eliezer Assunção de Paulo'
             width={150}
             height={150}
@@ -61,21 +53,7 @@ export default function HomePage() {
 
       {/* Posts Grid */}
       <section>
-        {loading ? (
-          <div className={styles.grid}>
-            {/* Loading Skeleton Mockup */}
-            {[1, 2, 3].map((i) => (
-              <div
-                key={i}
-                style={{
-                  height: '16rem',
-                  borderRadius: '1rem',
-                  backgroundColor: 'rgba(255,255,255,0.05)',
-                }}
-              />
-            ))}
-          </div>
-        ) : posts.length === 0 ? (
+        {posts.length === 0 ? (
           <div className={styles.emptyState}>
             <p className={styles.emptyText}>Nenhum post encontrado.</p>
             <Link href='/create' className={styles.createButton}>

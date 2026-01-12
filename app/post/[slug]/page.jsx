@@ -6,6 +6,9 @@ import { serverDb } from '../../../lib/firebase-server';
 import { ArticleViewer } from '../../components/ui/ArticleViewer/ArticleViewer';
 import styles from './page.module.css';
 
+// Revalidação a cada 1 hora (3600 segundos)
+export const revalidate = 3600;
+
 // Generate metadata for SEO
 export async function generateMetadata({ params }) {
   const { slug } = await params;
