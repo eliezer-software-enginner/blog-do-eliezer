@@ -2,7 +2,6 @@
 import { collection, getDocs, orderBy, query } from 'firebase/firestore';
 import { FIREBASE_COLLECTIONS } from '@/lib/collections';
 import Link from 'next/link';
-import Image from 'next/image';
 import styles from './page.module.css';
 import { PostCard } from './components/ui/PostCard/PostCard';
 import { serverDb } from '@/lib/firebase-server';
@@ -34,13 +33,12 @@ export default async function HomePage() {
       {/* Hero Section */}
       <section className={styles.hero}>
         <div className={styles.profileWrapper}>
-          <Image
+          <img
             src="/user_4.png"
             alt='Eliezer Assunção de Paulo'
             width={150}
             height={150}
             className={styles.profileImage}
-            priority
           />
         </div>
         <h1 className={styles.title}>Eliezer Assunção de Paulo</h1>

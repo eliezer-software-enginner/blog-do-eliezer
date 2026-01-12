@@ -48,12 +48,17 @@ const nextConfig: NextConfig = {
     optimizePackageImports: ['lucide-react'],
   },
 
-  // Imagens otimizadas
+  // Imagens otimizadas - desabilitado temporariamente
   images: {
     remotePatterns: [
       {
         protocol: 'https',
         hostname: 'firebasestorage.googleapis.com',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'blog-do-eliezer.vercel.app',
         pathname: '/**',
       },
       {
@@ -64,6 +69,7 @@ const nextConfig: NextConfig = {
       },
     ],
     formats: ['image/webp', 'image/avif'],
+    unoptimized: true,
   },
 
   // Configurações de revalidação
