@@ -1,0 +1,120 @@
+.wrapper {
+  max-width: 48rem; /* max-w-3xl */
+  margin: 0 auto;
+  animation: slideUp 0.7s ease-out;
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.875rem;
+  color: #94a3b8;
+  margin-bottom: 2rem;
+  transition: color 0.2s;
+}
+
+.backLink:hover {
+  color: var(--primary);
+}
+
+.arrow {
+  margin-right: 0.5rem;
+  transition: transform 0.2s;
+}
+
+.backLink:hover .arrow {
+  transform: translateX(-4px);
+}
+
+.header {
+  margin-bottom: 2.5rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.875rem;
+  font-family: monospace;
+}
+
+.date {
+  color: var(--primary);
+  background-color: rgba(139, 92, 246, 0.1);
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+}
+
+.author {
+  color: #94a3b8;
+}
+
+.author strong {
+  color: var(--foreground);
+}
+
+.title {
+  font-size: 2.5rem;
+  font-family: var(--font-outfit);
+  font-weight: 700;
+  line-height: 1.2;
+  background: linear-gradient(to bottom right, var(--foreground), #94a3b8);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+@media (min-width: 768px) {
+  .title {
+    font-size: 3rem;
+  }
+}
+
+/* Loading / Error States */
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  gap: 1rem;
+  color: #94a3b8;
+}
+
+.spinner {
+  width: 2rem;
+  height: 2rem;
+  border: 3px solid var(--primary);
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.error {
+  text-align: center;
+  min-height: 50vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.errorTitle {
+  font-size: 2.25rem;
+  color: #ef4444; /* destructive */
+  font-weight: 700;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(1rem); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}

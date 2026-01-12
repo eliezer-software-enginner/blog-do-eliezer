@@ -16,8 +16,30 @@ const outfit = Outfit({
 });
 
 export const metadata = {
-  title: "Blog do Eliezer",
-  description: "Um blog minimalista e moderno.",
+  metadataBase: new URL('https://blog-do-eliezer.vercel.app'),
+  title: "Blog do Eliezer - Programação Web e Desenvolvimento",
+  description: "Um blog minimalista e moderno sobre programação web, desenvolvimento de software e tecnologias. Compartilhando ideias, códigos e experiências.",
+  keywords: ["programação", "web", "desenvolvimento", "javascript", "react", "next.js", "firebase"],
+  openGraph: {
+    title: "Blog do Eliezer - Programação Web e Desenvolvimento",
+    description: "Um blog minimalista e moderno sobre programação web, desenvolvimento de software e tecnologias.",
+    type: "website",
+    url: "https://blog-do-eliezer.vercel.app",
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Blog do Eliezer",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Blog do Eliezer - Programação Web e Desenvolvimento",
+    description: "Um blog minimalista e moderno sobre programação web, desenvolvimento de software e tecnologias.",
+    images: ["/og-image.jpg"],
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

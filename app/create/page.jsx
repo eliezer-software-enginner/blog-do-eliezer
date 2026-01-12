@@ -1,21 +1,31 @@
 // /app/create/page.js
 'use client';
 
-import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import { addDoc, collection, serverTimestamp, query, where, getDocs } from 'firebase/firestore';
+import { FIREBASE_COLLECTIONS } from '../../lib/collections';
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { db } from '../../lib/firebase';
 import { useAuth } from '../context/AuthContext';
+import { generateSlug, generateUniqueSlug } from '../../lib/slug';
 import styles from './page.module.css';
 
 export default function CreatePostPage() {
   const { user, loading } = useAuth();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [slug, setSlug] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
+
+  // Generate slug from title
+  useEffect(() => {
+    if (title) {
+      setSlug(generateSlug(title));
+    }
+  }, [title]);
 
   // Protect Route
   useEffect(() => {
@@ -26,18 +36,32 @@ export default function CreatePostPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!title || !content) {
-      alert('Por favor, preencha o título e o conteúdo.');
+    if (!title || !content || !slug) {
+      alert('Por favor, preencha o título, conteúdo e slug.');
       return;
     }
 
     setIsSubmitting(true);
 
     try {
-      const postsCollection = collection(db, 'posts');
+      // Check if slug already exists
+      const postsQuery = query(collection(db, 'posts'), where('slug', '==', slug));
+      const querySnapshot = await getDocs(postsQuery);
+      
+      let finalSlug = slug;
+      if (!querySnapshot.empty) {
+        // Get existing slugs to generate unique one
+        const allPostsQuery = query(collection(db, FIREBASE_COLLECTIONS.POSTS));
+        const allPostsSnapshot = await getDocs(allPostsQuery);
+        const existingSlugs = allPostsSnapshot.docs.map(doc => doc.data().slug).filter(Boolean);
+        finalSlug = generateUniqueSlug(slug, existingSlugs);
+      }
+
+      const postsCollection = collection(db, FIREBASE_COLLECTIONS.POSTS);
       await addDoc(postsCollection, {
         title,
         content,
+        slug: finalSlug,
         createdAt: serverTimestamp(),
         authorId: user.uid,
         authorName: user.displayName,
@@ -74,21 +98,40 @@ export default function CreatePostPage() {
         </h1>
 
         <form onSubmit={handleSubmit} className={styles.form}>
-          <div className={styles.field}>
-            <label htmlFor="title" className={styles.label}>
-              Título
-            </label>
-            <input
-              id="title"
-              type="text"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              disabled={isSubmitting}
-              required
-              className={styles.input}
-              placeholder="Digite um título cativante..."
-            />
-          </div>
+<div className={styles.field}>
+             <label htmlFor="title" className={styles.label}>
+               Título
+             </label>
+             <input
+               id="title"
+               type="text"
+               value={title}
+               onChange={(e) => setTitle(e.target.value)}
+               disabled={isSubmitting}
+               required
+               className={styles.input}
+               placeholder="Digite um título cativante..."
+             />
+           </div>
+
+           <div className={styles.field}>
+             <label htmlFor="slug" className={styles.label}>
+               URL Amigável (Slug)
+             </label>
+             <input
+               id="slug"
+               type="text"
+               value={slug}
+               onChange={(e) => setSlug(e.target.value)}
+               disabled={isSubmitting}
+               required
+               className={styles.input}
+               placeholder="como-corrigir-um-erro-x"
+             />
+             <small style={{ color: 'var(--muted)', marginTop: '0.25rem', display: 'block' }}>
+               Será usado na URL: /post/{slug}
+             </small>
+           </div>
 
           <div className={styles.field}>
             <div className={styles.labelRow}>

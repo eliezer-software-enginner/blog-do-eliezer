@@ -1,6 +1,7 @@
 'use client';
 
 import { collection, getDocs, orderBy, query } from 'firebase/firestore';
+import { FIREBASE_COLLECTIONS } from '@/lib/collections';
 import { useEffect, useState } from 'react';
 
 import img from '@/app/assets/user_4.png';
@@ -17,7 +18,7 @@ export default function HomePage() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const postsCollection = collection(db, 'posts');
+        const postsCollection = collection(db, FIREBASE_COLLECTIONS.POSTS);
         const q = query(postsCollection, orderBy('createdAt', 'desc'));
         const postSnapshot = await getDocs(q);
 
@@ -95,7 +96,7 @@ export default function HomePage() {
                 }
                 author={post.authorName}
                 as={Link}
-                href={`/post/${post.id}`}
+                href={`/post/${post.slug || post.id}`}
               />
             ))}
           </div>
