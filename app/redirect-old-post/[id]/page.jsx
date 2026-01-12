@@ -1,26 +1,29 @@
-// /app/post/[id]/page.jsx
+// /app/redirect-old-post/[id]/page.jsx
 import { redirect } from 'next/navigation';
 import { query, collection, where, getDocs } from 'firebase/firestore';
-import { FIREBASE_COLLECTIONS } from '@/lib/collections';
 import { serverDb } from '@/lib/firebase-server';
+import { FIREBASE_COLLECTIONS } from '@/lib/collections';
 
 // Server-side redirect from old ID-based URLs to new slug-based URLs
 export default async function RedirectPage({ params }) {
   const { id } = await params;
   
   try {
-    // Search for post by ID
-    const postsQuery = query(collection(serverDb, FIREBASE_COLLECTIONS.POSTS), where('__name__', '==', id));
+    // Search for post by ID in the new collection
+    const postsQuery = query(
+      collection(serverDb, FIREBASE_COLLECTIONS.POSTS), 
+      where('__name__', '==', id)
+    );
     const querySnapshot = await getDocs(postsQuery);
 
     if (!querySnapshot.empty) {
       const post = querySnapshot.docs[0].data();
       
-      // If post has slug, redirect to new URL
+      // If post has slug, redirect to new URL (301 permanent)
       if (post.slug) {
         redirect(`/post/${post.slug}`);
       } else {
-        // If no slug, show temporary page or redirect to home
+        // If no slug, redirect to home
         redirect('/');
       }
     } else {
