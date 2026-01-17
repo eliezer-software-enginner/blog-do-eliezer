@@ -1,0 +1,28 @@
+
+> meu-blog-app@0.1.0 dev
+> next dev
+
+   ▲ Next.js 16.0.10 (Turbopack)
+   - Local:         http://localhost:3000
+   - Network:       http://192.168.3.111:3000
+   - Environments: .env.local
+   - Experiments (use with caution):
+     ✓ optimizeCss
+     · optimizePackageImports
+
+ ✓ Starting...
+ ✓ Ready in 1877ms
+ GET /api/posts 200 in 2.6s (compile: 2.1s, render: 551ms)
+ GET /api/debug 200 in 908ms (compile: 291ms, render: 617ms)
+ GET /api/debug 200 in 418ms (compile: 7ms, render: 410ms)
+ GET /api/posts 200 in 692ms (compile: 204ms, render: 489ms)
+ GET /api/posts 200 in 225ms (compile: 9ms, render: 217ms)
+ ○ Compiling / ...
+ GET / 200 in 7.0s (compile: 5.5s, render: 1549ms)
+ HEAD /post/vagas-sendo-canceladas 200 in 3.2s (compile: 2.8s, render: 375ms)
+ ✓ Compiled in 16ms
+ GET /api/posts 200 in 625ms (compile: 186ms, render: 439ms)
+ GET /api/posts 200 in 252ms (compile: 7ms, render: 245ms)
+ GET /api/posts 200 in 229ms (compile: 5ms, render: 224ms)
+ GET /api/posts 200 in 251ms (compile: 6ms, render: 245ms)
+ GET /api/posts 200 in 235ms (compile: 4ms, render: 232ms)
