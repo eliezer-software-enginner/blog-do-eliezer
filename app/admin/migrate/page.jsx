@@ -1,6 +1,9 @@
 // /app/admin/migrate/page.jsx
 'use client';
 
+// Forçar renderização dinâmica para evitar pré-renderização no build
+export const dynamic = 'force-dynamic';
+
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../../context/AuthContext';

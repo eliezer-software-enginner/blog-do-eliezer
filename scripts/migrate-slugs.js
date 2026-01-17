@@ -1,5 +1,6 @@
 import { collection, getDocs, updateDoc, doc, query, where } from 'firebase/firestore';
 import { db } from '../lib/firebase';
+import { FIREBASE_COLLECTIONS } from '../lib/collections';
 import { generateSlug, generateUniqueSlug } from '../lib/slug';
 
 /**
@@ -11,7 +12,7 @@ async function migratePostsWithSlugs() {
     console.log('Iniciando migração de posts...');
     
     // Buscar todos os posts que não têm slug
-    const postsCollection = collection(db, 'posts');
+    const postsCollection = collection(db, FIREBASE_COLLECTIONS.POSTS);
     const postsSnapshot = await getDocs(postsCollection);
     
     if (postsSnapshot.empty) {
