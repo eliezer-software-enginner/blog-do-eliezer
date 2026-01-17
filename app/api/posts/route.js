@@ -4,8 +4,9 @@ import { serverDb } from '@/lib/firebase-server';
 import { FIREBASE_COLLECTIONS } from '@/lib/collections';
 import { NextResponse } from 'next/server';
 
-// Cache de 5 minutos para API de posts
+// Cache com tag para revalidação manual
 export const revalidate = 300;
+export const dynamic = 'force-dynamic';
 
 export async function GET() {
   try {
@@ -22,6 +23,12 @@ export async function GET() {
       success: true,
       data: posts,
       cachedAt: new Date().toISOString(),
+    }, {
+      headers: {
+        'Cache-Control': 'no-store, must-revalidate',
+        'CDN-Cache-Control': 'no-store',
+        'Vercel-CDN-Cache-Control': 'no-store',
+      }
     });
 
   } catch (error) {

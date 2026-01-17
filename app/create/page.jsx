@@ -67,6 +67,13 @@ export default function CreatePostPage() {
         authorName: user.displayName,
       });
 
+      // Limpa o cache para exibir o novo post imediatamente
+      try {
+        await fetch('/api/revalidate', { method: 'POST' });
+      } catch (revalidateError) {
+        console.warn('Não foi possível limpar o cache:', revalidateError);
+      }
+
       router.push('/');
     } catch (error) {
       console.error('Erro ao adicionar documento: ', error);
