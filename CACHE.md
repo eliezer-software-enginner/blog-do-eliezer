@@ -39,6 +39,9 @@ O workflow `.github/workflows/auto-clear-cache.yml` limpa automaticamente o cach
 ### Execução Manual
 Vá para Actions > Auto Clear Cache on Push > "Run workflow"
 
+### Testar API
+Vá para Actions > Test Cache API > "Run workflow" para verificar se a API está funcionando
+
 ## Script Local
 ```bash
 # Instalar no Windows (Git Bash ou WSL)

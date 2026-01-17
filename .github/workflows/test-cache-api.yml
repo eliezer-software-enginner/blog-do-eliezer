@@ -1,0 +1,51 @@
+name: Test Cache API
+
+on:
+  workflow_dispatch:  # Execução manual apenas
+
+jobs:
+  test-cache-api:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Testar API de limpeza de cache
+      run: |
+        if [ "${{ secrets.PRODUCTION_SITE_URL }}" != "" ]; then
+          echo "🧪 Testando API: ${{ secrets.PRODUCTION_SITE_URL }}/api/clear-cache"
+          
+          # Testa se a API está online
+          echo "1. Testando se API responde..."
+          status_code=$(curl -s -o /dev/null -w "%{http_code}" "${{ secrets.PRODUCTION_SITE_URL }}/api/clear-cache" \
+            -X POST \
+            -H "Content-Type: application/json" \
+            -d '{"all": true}' \
+            --max-time 10)
+          
+          echo "Status Code: $status_code"
+          
+          if [ "$status_code" = "200" ]; then
+            echo "✅ API está online e respondendo"
+            
+            # Testa resposta completa
+            echo "2. Testando resposta completa..."
+            response=$(curl -s -X POST "${{ secrets.PRODUCTION_SITE_URL }}/api/clear-cache" \
+              -H "Content-Type: application/json" \
+              -d '{"all": true}')
+            
+            echo "Resposta: $response"
+            
+            if echo "$response" | grep -q '"success":true'; then
+              echo "✅ API funcionando corretamente"
+            else
+              echo "❌ API respondeu mas com erro"
+            fi
+          else
+            echo "❌ API não está respondendo (HTTP $status_code)"
+            echo "Possíveis causas:"
+            echo "- Site ainda não fez deploy"
+            echo "- API tem algum erro"
+            echo "- URL está incorreta"
+          fi
+        else
+          echo "❌ PRODUCTION_SITE_URL não configurado"
+        fi
