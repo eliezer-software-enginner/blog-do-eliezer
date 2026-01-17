@@ -1,0 +1,33 @@
+name: Auto Clear Cache on Push
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  clear-cache:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Limpar cache via API
+      run: |
+        # Faz requisição para limpar o cache do site em produção
+        if [ "${{ secrets.PRODUCTION_SITE_URL }}" != "" ]; then
+          echo "🔄 Limpando cache do site em produção..."
+          response=$(curl -s -X POST "${{ secrets.PRODUCTION_SITE_URL }}/api/clear-cache" \
+            -H "Content-Type: application/json" \
+            -d '{"all": true}')
+          
+          echo "Resposta: $response"
+          
+          # Verifica se a limpeza foi bem-sucedida
+          if echo "$response" | grep -q '"success":true'; then
+            echo "✅ Cache limpo com sucesso!"
+          else
+            echo "❌ Falha ao limpar cache"
+            exit 1
+          fi
+        else
+          echo "⚠️ PRODUCTION_SITE_URL não configurado nos secrets"
+          echo "Configure em: Settings > Secrets and variables > Actions"
+        fi

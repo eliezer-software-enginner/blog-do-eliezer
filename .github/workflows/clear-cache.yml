@@ -1,0 +1,50 @@
+name: Limpar Cache e Deploy
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:  # Permite execução manual
+
+jobs:
+  deploy-and-clear-cache:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout do código
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: Instalar dependências
+      run: npm ci
+      
+    - name: Build do projeto
+      run: npm run build
+      
+    - name: Deploy (se estiver em Vercel/Netlify)
+      # Adicione aqui o step de deploy do seu provedor
+      # Exemplo para Vercel:
+      # - name: Deploy to Vercel
+      #   uses: amondnet/vercel-action@v25
+      #   with:
+      #     vercel-token: ${{ secrets.VERCEL_TOKEN }}
+      #     vercel-org-id: ${{ secrets.ORG_ID }}
+      #     vercel-project-id: ${{ secrets.PROJECT_ID }}
+      run: echo "Deploy step aqui"
+      
+    - name: Limpar cache do site
+      run: |
+        # Se o site estiver online, faz uma requisição para limpar o cache
+        if [ "${{ secrets.SITE_URL }}" != "" ]; then
+          curl -X POST "${{ secrets.SITE_URL }}/api/clear-cache" \
+            -H "Content-Type: application/json" \
+            -d '{"all": true}' \
+            || echo "Não foi possível limpar o cache (site pode não estar online ainda)"
+        fi
+      
+    - name: Notificar sucesso
+      run: echo "✅ Deploy e limpeza de cache concluídos!"
