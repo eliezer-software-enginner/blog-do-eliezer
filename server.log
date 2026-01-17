@@ -26,3 +26,4 @@
  GET /api/posts 200 in 229ms (compile: 5ms, render: 224ms)
  GET /api/posts 200 in 251ms (compile: 6ms, render: 245ms)
  GET /api/posts 200 in 235ms (compile: 4ms, render: 232ms)
+ GET / 200 in 1107ms (compile: 230ms, render: 877ms)
