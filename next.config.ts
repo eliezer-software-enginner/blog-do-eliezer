@@ -25,20 +25,7 @@ const nextConfig: NextConfig = {
           },
         ],
       },
-      {
-        // Rotas do Firebase - evitar bloqueios
-        source: '/(.*)',
-        headers: [
-          {
-            key: 'Cross-Origin-Embedder-Policy',
-            value: 'require-corp',
-          },
-          {
-            key: 'Cross-Origin-Opener-Policy',
-            value: 'same-origin',
-          },
-        ],
-      },
+
     ];
   },
 
@@ -62,6 +49,16 @@ const nextConfig: NextConfig = {
         pathname: '/**',
       },
       {
+        protocol: 'https',
+        hostname: 'storage.googleapis.com',
+        pathname: '/**',
+      },
+      {
+        protocol: 'http',
+        hostname: 'storage.googleapis.com',
+        pathname: '/**',
+      },
+      {
         protocol: 'http',
         hostname: 'localhost',
         port: '3000',
@@ -69,7 +66,7 @@ const nextConfig: NextConfig = {
       },
     ],
     formats: ['image/webp', 'image/avif'],
-    unoptimized: true,
+    unoptimized: false,
   },
 
   // Configurações de revalidação
